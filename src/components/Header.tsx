@@ -31,8 +31,8 @@ const Header = () => {
             <a href="#about" className="text-muted-foreground hover:text-ai-primary transition-colors">
               О проекте
             </a>
-            <Button variant="outline" size="sm" className="hover:bg-ai-primary hover:text-white hover:border-ai-primary">
-              Админ-панель
+            <Button variant="outline" size="sm" className="hover:bg-ai-primary hover:text-white hover:border-ai-primary" asChild>
+              <a href="/admin">Админ-панель</a>
             </Button>
           </nav>
 
@@ -60,8 +60,8 @@ const Header = () => {
               <a href="#about" className="text-muted-foreground hover:text-ai-primary transition-colors">
                 О проекте
               </a>
-              <Button variant="outline" size="sm" className="hover:bg-ai-primary hover:text-white hover:border-ai-primary w-fit">
-                Админ-панель
+              <Button variant="outline" size="sm" className="hover:bg-ai-primary hover:text-white hover:border-ai-primary w-fit" asChild>
+                <a href="/admin">Админ-панель</a>
               </Button>
             </nav>
           </div>

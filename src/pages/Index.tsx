@@ -1,25 +1,58 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import FilterBar from "@/components/FilterBar";
 import ServiceCard from "@/components/ServiceCard";
-import { mockServices, categories } from "@/data/mockData";
+
+interface Service {
+  id: string;
+  title: string;
+  description: string;
+  url: string;
+  categories: {
+    name: string;
+  };
+}
+
+interface Category {
+  id: string;
+  name: string;
+}
 
 const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [services, setServices] = useState<Service[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // All available categories including "Универсальные"
-  const allCategories = [...new Set([...categories, 'Универсальные'])].sort();
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const filteredServices = useMemo(() => {
-    return mockServices.filter(service => {
-      const matchesCategory = selectedCategory === 'all' || service.category === selectedCategory;
-      const matchesSearch = service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           service.description.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCategory && matchesSearch;
-    });
-  }, [selectedCategory, searchQuery]);
+  const fetchData = async () => {
+    try {
+      const [servicesResponse, categoriesResponse] = await Promise.all([
+        supabase.from("services").select("*, categories(name)").order("title"),
+        supabase.from("categories").select("*").order("name"),
+      ]);
+
+      if (servicesResponse.data) setServices(servicesResponse.data);
+      if (categoriesResponse.data) setCategories(categoriesResponse.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredServices = services.filter(service => {
+    const matchesCategory = selectedCategory === 'all' || service.categories.name === selectedCategory;
+    const matchesSearch = service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         service.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="min-h-screen bg-background">
@@ -46,55 +79,61 @@ const Index = () => {
                 onCategoryChange={setSelectedCategory}
                 searchQuery={searchQuery}
                 onSearchChange={setSearchQuery}
-                categories={allCategories}
+                categories={categories.map(c => c.name)}
               />
             </div>
 
-            {/* Results count */}
-            <div className="mb-6">
-              <p className="text-muted-foreground">
-                Найдено сервисов: <span className="font-semibold text-ai-primary">{filteredServices.length}</span>
-                {selectedCategory !== 'all' && (
-                  <span> в категории "{selectedCategory}"</span>
-                )}
-              </p>
-            </div>
-
-            {/* Services Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
-              {filteredServices.map((service) => (
-                <ServiceCard
-                  key={service.id}
-                  title={service.title}
-                  description={service.description}
-                  category={service.category}
-                  url={service.url}
-                  rating={service.rating}
-                  featured={service.featured}
-                />
-              ))}
-            </div>
-
-            {/* Empty state */}
-            {filteredServices.length === 0 && (
+            {loading ? (
               <div className="text-center py-16">
-                <div className="text-6xl mb-4">🤖</div>
-                <h3 className="text-2xl font-semibold text-foreground mb-2">
-                  Сервисы не найдены
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  Попробуйте изменить фильтры или поисковый запрос
-                </p>
-                <button
-                  onClick={() => {
-                    setSelectedCategory('all');
-                    setSearchQuery('');
-                  }}
-                  className="text-ai-primary hover:underline"
-                >
-                  Сбросить фильтры
-                </button>
+                <div className="text-lg text-muted-foreground">Загрузка сервисов...</div>
               </div>
+            ) : (
+              <>
+                {/* Results count */}
+                <div className="mb-6">
+                  <p className="text-muted-foreground">
+                    Найдено сервисов: <span className="font-semibold text-ai-primary">{filteredServices.length}</span>
+                    {selectedCategory !== 'all' && (
+                      <span> в категории "{selectedCategory}"</span>
+                    )}
+                  </p>
+                </div>
+
+                {/* Services Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
+                  {filteredServices.map((service) => (
+                    <ServiceCard
+                      key={service.id}
+                      title={service.title}
+                      description={service.description}
+                      category={service.categories.name}
+                      url={service.url}
+                    />
+                  ))}
+                </div>
+
+                {/* Empty state */}
+                {filteredServices.length === 0 && (
+                  <div className="text-center py-16">
+                    <div className="text-6xl mb-4">🤖</div>
+                    <h3 className="text-2xl font-semibold text-foreground mb-2">
+                      Сервисы не найдены
+                    </h3>
+                    <p className="text-muted-foreground mb-6">
+                      Попробуйте изменить фильтры или поисковый запрос
+                    </p>
+                    <button
+                      onClick={() => {
+                        setSelectedCategory('all');
+                        setSearchQuery('');
+                      }}
+                      className="text-ai-primary hover:underline"
+                    >
+                      Сбросить фильтры
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </section>
