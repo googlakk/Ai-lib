@@ -33,7 +33,7 @@ const Hero = () => {
               <BookOpen className="w-5 h-5 mr-2" />
               Исследовать каталог
             </Button>
-            <Button size="lg" variant="outline" className="bg-white text-primary hover:bg-ai-secondary hover:text-white transition-all duration-300 shadow-ai">
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary transition-all duration-300">
               <Users className="w-5 h-5 mr-2" />
               Для администраторов
             </Button>
