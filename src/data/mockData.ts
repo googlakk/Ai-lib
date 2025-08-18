@@ -11,21 +11,24 @@ export interface AIService {
 export const categories = [
   "Математика",
   "Русский язык",
+  "Кыргызский язык",
   "Английский язык", 
-  "История",
+  "История Кыргызстана",
+  "Всемирная история",
   "Физика",
   "Химия",
   "Биология",
   "География",
   "Информатика",
-  "Искусство"
+  "Изобразительное искусство",
+  "Физическая культура"
 ];
 
 export const mockServices: AIService[] = [
   {
     id: "1",
-    title: "ChatGPT в образовании",
-    description: "Универсальный AI-помощник для создания планов уроков, объяснения сложных тем и генерации заданий для любого предмета.",
+    title: "ChatGPT для преподавателей",
+    description: "Помощник для создания планов уроков, разработки заданий и подготовки материалов для всех предметов в Intellect Pro School.",
     category: "Универсальные",
     url: "https://chat.openai.com",
     rating: 4.8,
@@ -79,7 +82,7 @@ export const mockServices: AIService[] = [
   {
     id: "7",
     title: "Quill.org",
-    description: "Бесплатные инструменты для обучения письму и грамматике с использованием AI для персонализированной обратной связи.",
+    description: "Инструменты для обучения письму и грамматике на русском языке с AI-обратной связью для учеников Intellect Pro School.",
     category: "Русский язык",
     url: "https://quill.org",
     rating: 4.3,
@@ -96,8 +99,8 @@ export const mockServices: AIService[] = [
   },
   {
     id: "9",
-    title: "Google Earth VR",
-    description: "Виртуальные путешествия по всему миру для изучения географии с интерактивными уроками и AI-гидом.",
+    title: "Google Earth для изучения Кыргызстана",
+    description: "Интерактивное изучение географии Кыргызстана и мира с виртуальными экскурсиями и AI-гидом для уроков в Intellect Pro School.",
     category: "География", 
     url: "https://earth.google.com/web/",
     rating: 4.5,
@@ -105,17 +108,17 @@ export const mockServices: AIService[] = [
   },
   {
     id: "10",
-    title: "MuseNet",
-    description: "AI-композитор от OpenAI для создания музыки в различных стилях. Помогает в уроках музыки и творчества.",
-    category: "Искусство",
-    url: "https://openai.com/blog/musenet/",
+    title: "AI помощник для кыргызского языка",
+    description: "Специализированный инструмент для изучения кыргызского языка, проверки правописания и создания учебных материалов.",
+    category: "Кыргызский язык",
+    url: "https://translate.google.com/?sl=ky&tl=ru",
     rating: 4.1,
     featured: false
   },
   {
     id: "11",
-    title: "Socratic by Google",
-    description: "AI-помощник для решения домашних заданий. Использует камеру для распознавания задач и предоставляет объяснения.",
+    title: "Socratic для учеников IPS",
+    description: "AI-помощник для домашних заданий учеников Intellect Pro School. Распознает задачи через камеру и предоставляет пошаговые объяснения.",
     category: "Универсальные",
     url: "https://socratic.org",
     rating: 4.4,
@@ -123,8 +126,8 @@ export const mockServices: AIService[] = [
   },
   {
     id: "12",
-    title: "Labster",
-    description: "Виртуальные научные лаборатории с AI-симуляциями для безопасного проведения экспериментов по биологии и химии.",
+    title: "Виртуальные лаборатории IPS",
+    description: "Безопасные виртуальные научные эксперименты с AI-симуляциями для уроков биологии и химии в Intellect Pro School.",
     category: "Биология",
     url: "https://labster.com",
     rating: 4.6,

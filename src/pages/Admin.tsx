@@ -238,7 +238,7 @@ const Admin = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center gap-4 mb-8">
           <Link to="/">
-            <Button variant="outline" size="sm" className="text-white border-white hover:bg-white hover:text-primary">
+            <Button variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white hover:text-primary transition-all duration-300">
               <ArrowLeft className="w-4 h-4 mr-2" />
               На главную
             </Button>
@@ -263,7 +263,7 @@ const Admin = () => {
                   Управление категориями
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button variant="outline" size="sm" className="text-white border-white hover:bg-white hover:text-primary">
+                      <Button variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white hover:text-primary transition-all duration-300">
                         <Plus className="w-4 h-4 mr-2" />
                         Добавить категорию
                       </Button>
@@ -340,7 +340,7 @@ const Admin = () => {
                             variant="outline"
                             size="sm"
                             onClick={() => editCategory(category)}
-                            className="text-white border-white/30 hover:bg-white hover:text-primary"
+                            className="bg-white/10 text-white border-white/30 hover:bg-white hover:text-primary transition-all duration-300"
                           >
                             <Edit className="w-4 h-4" />
                           </Button>
@@ -348,7 +348,7 @@ const Admin = () => {
                             variant="outline"
                             size="sm"
                             onClick={() => handleDeleteCategory(category.id)}
-                            className="text-white border-white/30 hover:bg-destructive hover:text-white"
+                            className="bg-red-500/20 text-white border-red-400/30 hover:bg-red-500 hover:text-white transition-all duration-300"
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
@@ -368,7 +368,7 @@ const Admin = () => {
                   Управление сервисами
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button variant="outline" size="sm" className="text-white border-white hover:bg-white hover:text-primary">
+                      <Button variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white hover:text-primary transition-all duration-300">
                         <Plus className="w-4 h-4 mr-2" />
                         Добавить сервис
                       </Button>
@@ -483,7 +483,7 @@ const Admin = () => {
                             variant="outline"
                             size="sm"
                             onClick={() => editService(service)}
-                            className="text-white border-white/30 hover:bg-white hover:text-primary"
+                            className="bg-white/10 text-white border-white/30 hover:bg-white hover:text-primary transition-all duration-300"
                           >
                             <Edit className="w-4 h-4" />
                           </Button>
@@ -491,7 +491,7 @@ const Admin = () => {
                             variant="outline"
                             size="sm"
                             onClick={() => handleDeleteService(service.id)}
-                            className="text-white border-white/30 hover:bg-destructive hover:text-white"
+                            className="bg-red-500/20 text-white border-red-400/30 hover:bg-red-500 hover:text-white transition-all duration-300"
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>

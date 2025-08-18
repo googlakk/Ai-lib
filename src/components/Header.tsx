@@ -15,8 +15,8 @@ const Header = () => {
               <Brain className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="font-bold text-lg text-foreground">AI Edu Tools</h1>
-              <p className="text-xs text-muted-foreground">Каталог для учителей</p>
+              <h1 className="font-bold text-lg text-foreground">Intellect Pro School</h1>
+              <p className="text-xs text-muted-foreground">AI-каталог для преподавателей</p>
             </div>
           </div>
 
