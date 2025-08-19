@@ -1,9 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { Brain, Menu, X } from "lucide-react";
+import { Brain, Menu, X, User, LogOut, UserPlus } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { teacher, logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
@@ -31,9 +35,27 @@ const Header = () => {
             <a href="#about" className="text-muted-foreground hover:text-ai-primary transition-colors">
               О проекте
             </a>
-            <Button variant="outline" size="sm" className="hover:bg-ai-primary hover:text-white hover:border-ai-primary" asChild>
-              <a href="/admin">Админ-панель</a>
-            </Button>
+            
+            {teacher ? (
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <User className="w-4 h-4" />
+                  <span>{teacher.full_name}</span>
+                </div>
+                <Button variant="outline" size="sm" onClick={() => navigate('/admin')}>
+                  Админ-панель
+                </Button>
+                <Button variant="outline" size="sm" onClick={logout}>
+                  <LogOut className="w-4 h-4 mr-1" />
+                  Выйти
+                </Button>
+              </div>
+            ) : (
+              <Button variant="outline" size="sm" onClick={() => navigate('/auth')}>
+                <UserPlus className="w-4 h-4 mr-1" />
+                Вход / Регистрация
+              </Button>
+            )}
           </nav>
 
           {/* Mobile menu button */}
@@ -60,9 +82,27 @@ const Header = () => {
               <a href="#about" className="text-muted-foreground hover:text-ai-primary transition-colors">
                 О проекте
               </a>
-              <Button variant="outline" size="sm" className="hover:bg-ai-primary hover:text-white hover:border-ai-primary w-fit" asChild>
-                <a href="/admin">Админ-панель</a>
-              </Button>
+              
+              {teacher ? (
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <User className="w-4 h-4" />
+                    <span>{teacher.full_name}</span>
+                  </div>
+                  <Button variant="outline" size="sm" onClick={() => navigate('/admin')} className="w-fit">
+                    Админ-панель
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={logout} className="w-fit">
+                    <LogOut className="w-4 h-4 mr-1" />
+                    Выйти
+                  </Button>
+                </div>
+              ) : (
+                <Button variant="outline" size="sm" onClick={() => navigate('/auth')} className="w-fit">
+                  <UserPlus className="w-4 h-4 mr-1" />
+                  Вход / Регистрация
+                </Button>
+              )}
             </nav>
           </div>
         )}

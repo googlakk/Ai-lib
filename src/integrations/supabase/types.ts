@@ -43,7 +43,11 @@ export type Database = {
           category_id: string
           created_at: string
           description: string
+          examples: string | null
           id: string
+          instructions: string | null
+          tags: string[] | null
+          teacher_id: string | null
           title: string
           updated_at: string
           url: string
@@ -52,7 +56,11 @@ export type Database = {
           category_id: string
           created_at?: string
           description: string
+          examples?: string | null
           id?: string
+          instructions?: string | null
+          tags?: string[] | null
+          teacher_id?: string | null
           title: string
           updated_at?: string
           url: string
@@ -61,7 +69,11 @@ export type Database = {
           category_id?: string
           created_at?: string
           description?: string
+          examples?: string | null
           id?: string
+          instructions?: string | null
+          tags?: string[] | null
+          teacher_id?: string | null
           title?: string
           updated_at?: string
           url?: string
@@ -74,7 +86,50 @@ export type Database = {
             referencedRelation: "categories"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "services_teacher_id_fkey"
+            columns: ["teacher_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
         ]
+      }
+      teachers: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          is_active: boolean
+          password_hash: string
+          school: string | null
+          subject: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          is_active?: boolean
+          password_hash: string
+          school?: string | null
+          subject?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          is_active?: boolean
+          password_hash?: string
+          school?: string | null
+          subject?: string | null
+          updated_at?: string
+        }
+        Relationships: []
       }
     }
     Views: {

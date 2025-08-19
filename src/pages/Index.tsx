@@ -4,12 +4,16 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import FilterBar from "@/components/FilterBar";
 import ServiceCard from "@/components/ServiceCard";
+import { ServiceDetailModal } from "@/components/ServiceDetailModal";
 
 interface Service {
   id: string;
   title: string;
   description: string;
   url: string;
+  instructions: string | null;
+  examples: string | null;
+  tags: string[] | null;
   categories: {
     name: string;
   };
@@ -26,6 +30,8 @@ const Index = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -45,6 +51,16 @@ const Index = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleShowServiceDetails = (service: Service) => {
+    setSelectedService(service);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedService(null);
   };
 
   const filteredServices = services.filter(service => {
@@ -108,6 +124,10 @@ const Index = () => {
                       description={service.description}
                       category={service.categories.name}
                       url={service.url}
+                      instructions={service.instructions}
+                      examples={service.examples}
+                      tags={service.tags}
+                      onShowDetails={() => handleShowServiceDetails(service)}
                     />
                   ))}
                 </div>
@@ -158,6 +178,13 @@ const Index = () => {
           </div>
         </section>
       </main>
+
+      {/* Service Detail Modal */}
+      <ServiceDetailModal
+        service={selectedService}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 };
